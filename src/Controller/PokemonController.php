@@ -47,8 +47,6 @@ class PokemonController extends AbstractController
             }
 
             return $this->redirect('/pokemon');
-            // unset($pokemon);
-            // unset($formula);
         }
 
 
@@ -64,19 +62,20 @@ class PokemonController extends AbstractController
     #[Route('/pokemon/delete/{id}', name: 'pokemon_delete')]
     public function delete(Pokemon $pokemon, EMI $em): Response
     {
-        if (!$pokemon) {
-            throw $this->createNotFoundException('No pokemon found');
-        }
+
         $em->remove($pokemon);
         $em->flush();
         return $this->redirect('/pokemon');
     }
 
 
-
     #[Route('/pokemon/{id}', name: 'pokemon_show')]
     public function show(Pokemon $pokemon): Response
     {
+        if (!$pokemon) {
+            return $this->redirect('/404');
+        }
+
         return $this->render('pokemon/show.html.twig', [
             'pokemon' => $pokemon,
         ]);

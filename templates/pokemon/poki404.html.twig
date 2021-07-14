@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}PokemonDex
+{% endblock %}
+
+{% block body %}
+	<h1 class="text-center">PokemonDex</h1>
+	<a href="{{path('pokemon_new')}}" class="btn btn-success ms-5">Add New</a>
+
+	<div class="container">
+		<div class="row d-flex p-5">
+			<h1 class="text-center">404</h1>
+			<h2 class="text-center">Sorry that Pokemon was not found.
+			</h2>
+			<h3 class="text-center">But here is a cute picture of another pokemon.
+			</h3>
+
+			<img src="https://lorempokemon.fakerapi.it/pokemon/200/457" alt="pokemon" class="card-img-top">
+			<a href="{{path('pokemon')}}" class="btn btn-info m-5">Home</a>
+
+
+		</div>
+	</div>
+
+
+{% endblock %}
