@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{% if creationMode == false %}
+		Edit Pokemon
+	{% else %}
+		Add Pokemon
+	{% endif %}
+
+
+{% endblock %}
+
+{% block body %}
+	<h1 class="text-center">
+		{% if creationMode == false %}
+			Edit Pokemon
+		{% else %}
+			Add Pokemon
+		{% endif %}
+	</h1>
+	{{ form_start(form)}}
+	<div class="container">
+		<div class="row">
+			<div class="col-6">
+				{% if creationMode == false %}
+					<img style="max-width: 200px" src="https://lorempokemon.fakerapi.it/pokemon/200/457" alt="pokemon" class="card-img-top">
+				{% endif %}
+
+				{{form_row(form.name, {'attr': {'class': 'bg-light m-2'}})}}
+				{{form_row(form.type, {'attr': {'class': 'bg-light m-2'}})}}
+				{{form_row(form.canEvolve, {'attr': {'class': 'bg-light m-2'}})}}
+				<button class="btn btn-danger" type="submit">
+					{% if creationMode == false %}
+						Edit Pokemon
+					{% else %}
+						Add Pokemon
+					{% endif %}
+				</button>
+				<a href="{{path('pokemon')}}" class="btn btn-info">Home</a>
+			</div>
+		</div>
+	</div>
+
+
+	{{ form_end(form)}}
+{% endblock %}

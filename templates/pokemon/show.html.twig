@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}PokemonDex:
+	{{pokemon.id}}
+{% endblock %}
+
+{% block body %}
+	<h1 class="text-center">PokemonDex</h1>
+
+	<div class="container">
+		<div class="row d-flex p-5">
+			<div class="card col-4 p-3 m-2">
+
+				<img src="https://lorempokemon.fakerapi.it/pokemon/200/457" alt="pokemon" class="card-img-top">
+				<div class="card-body">
+
+					<h3>name:
+						{{pokemon.name}}</h3>
+					<h3>type:
+						{{pokemon.type}}</h3>
+					<p>
+						<strong>
+							Can Evolve:
+							{{pokemon.canEvolve}}</strong>
+					</p>
+
+					<a href="{{path('pokemon')}}" class="btn btn-info">Home</a>
+					<a href="{{path('pokemon_edit', {id: pokemon.id})}}" class="btn btn-warning">Edit</a>
+					<a href="{{path('pokemon_delete', {id: pokemon.id})}}" class="btn btn-danger">Delete</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+{% endblock %}
