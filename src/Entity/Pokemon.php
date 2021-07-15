@@ -10,6 +10,9 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Pokemon
 {
+
+
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -31,6 +34,11 @@ class Pokemon
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $canEvolve;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $image;
 
     public function getId(): ?int
     {
@@ -69,6 +77,18 @@ class Pokemon
     public function setCanEvolve(?string $canEvolve): self
     {
         $this->canEvolve = $canEvolve;
+
+        return $this;
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(string $image): self
+    {
+        $this->image = $image;
 
         return $this;
     }

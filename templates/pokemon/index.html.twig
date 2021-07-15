@@ -11,7 +11,8 @@
 		<div class="d-flex flex-wrap p-5">
 			{% for pokemon in pokemons %}
 				<div class="card col-4 p-3 m-1">
-					<img src="https://lorempokemon.fakerapi.it/pokemon/200/457" alt="pokemon" class="card-img-top">
+					<img src="{{ asset('uploads/images/pokemon/' ~ pokemon.image) }}">
+
 
 					<div class="card-body">
 						<h3>name:
