@@ -31,7 +31,14 @@
 				{{form_row(form.name, {'attr': {'class': 'bg-light m-2'}})}}
 				{{form_row(form.type, {'attr': {'class': 'bg-light m-2'}})}}
 				{{form_row(form.canEvolve, {'attr': {'class': 'bg-light m-2'}})}}
-				{{form_row(form.image, {'attr': {'class': 'bg-light m-2'}})}}
+				{{form_row(form.catagory)}}
+
+
+				{% if creationMode == true %}
+					{{form_row(form.image, {'attr': {'required': 'required'}})}}
+				{% else %}
+					{{form_row(form.image, {'attr': {'class': 'bg-light m-2'}})}}
+				{% endif %}
 
 
 				<button class="btn btn-danger" type="submit">

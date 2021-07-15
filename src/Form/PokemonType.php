@@ -2,7 +2,9 @@
 
 namespace App\Form;
 
+use App\Entity\Catagory;
 use App\Entity\Pokemon;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\File;
@@ -18,8 +20,12 @@ class PokemonType extends AbstractType
             ->add('name')
             ->add('type')
             ->add('canEvolve')
+            ->add('catagory', EntityType::class, [
+                'class' => Catagory::class,
+                'choice_label' => 'name'
+            ])
             ->add('image', FileType::class, [
-                'label' => 'pokemon_image (jpg file)',
+                'label' => 'Upload a Pokemon Image... jpg, jpeg, png',
 
                 // unmapped means that this field is not associated to any entity property
                 'mapped' => false,

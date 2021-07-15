@@ -40,6 +40,11 @@ class Pokemon
      */
     private $image;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Catagory::class, inversedBy="pokemon")
+     */
+    private $catagory;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -89,6 +94,18 @@ class Pokemon
     public function setImage(string $image): self
     {
         $this->image = $image;
+
+        return $this;
+    }
+
+    public function getCatagory(): ?Catagory
+    {
+        return $this->catagory;
+    }
+
+    public function setCatagory(?Catagory $catagory): self
+    {
+        $this->catagory = $catagory;
 
         return $this;
     }

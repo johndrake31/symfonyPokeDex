@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+
 use App\Entity\Pokemon;
 use App\Form\PokemonType;
 use App\Repository\PokemonRepository;
@@ -24,6 +25,7 @@ class PokemonController extends AbstractController
     public function index(PokemonRepository $repo): Response
     {
         $pokemons = $repo->findAll();
+
         return $this->render('pokemon/index.html.twig', [
             'pokemons' => $pokemons,
         ]);
@@ -65,11 +67,14 @@ class PokemonController extends AbstractController
 
             // updates the 'brochureFilename' property to store the PDF file name
             // instead of its contents
-            $pokemon->setImage($newFilename);
+            if ($creationMode || $formula->get('image')->getData() != null) {
+                $pokemon->setImage($newFilename);
+            }
 
 
             $entityManager->persist($pokemon);
             $entityManager->flush();
+
 
             if (!$creationMode) {
                 return $this->redirectToRoute('pokemon_show', [
