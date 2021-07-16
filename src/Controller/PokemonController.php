@@ -2,16 +2,17 @@
 
 namespace App\Controller;
 
-
+use App\Entity\Catagory;
 use App\Entity\Pokemon;
+use App\Form\CatagoryType;
 use App\Form\PokemonType;
+use App\Repository\CatagoryRepository;
 use App\Repository\PokemonRepository;
 use Doctrine\ORM\EntityManagerInterface as EMI;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
@@ -51,19 +52,21 @@ class PokemonController extends AbstractController
         $formula->handleRequest($req);
 
         if ($formula->isSubmitted()) {
-            /** @var UploadedFile $imageFile */
-            $imageFile = $formula->get('image')->getData();
 
-            $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
-            // this is needed to safely include the file name as part of the URL
-            $safeFilename = $slugger->slug($originalFilename);
-            $newFilename = $safeFilename . '-' . uniqid() . '.' . $imageFile->guessExtension();
+            if ($formula->get('image')->getData() != null) {
+                //START IMAGE SUBMISSION
+                /** @var UploadedFile $imageFile */
+                $imageFile = $formula->get('image')->getData();
 
-
-            $imageFile->move(
-                $this->getParameter('pokemon_directory'),
-                $newFilename
-            );
+                $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
+                // this is needed to safely include the file name as part of the URL
+                $safeFilename = $slugger->slug($originalFilename);
+                $newFilename = $safeFilename . '-' . uniqid() . '.' . $imageFile->guessExtension();
+                $imageFile->move(
+                    $this->getParameter('pokemon_directory'),
+                    $newFilename
+                );
+            }
 
             // updates the 'brochureFilename' property to store the PDF file name
             // instead of its contents
@@ -71,7 +74,7 @@ class PokemonController extends AbstractController
                 $pokemon->setImage($newFilename);
             }
 
-
+            //END IMAGE SUBMISSION
             $entityManager->persist($pokemon);
             $entityManager->flush();
 
@@ -95,7 +98,37 @@ class PokemonController extends AbstractController
         );
     }
 
+    /**
+     * 
+     * @Route("/pokemon/catagory/new", name="catagory_new")
+     */
+    public function newCatagory(Catagory $catagory = null, Request $req, EMI $em, CatagoryRepository $repo): Response
+    {
+        $catagories = $repo->findAll();
+        $creationMode = false;
+        //test to see if mode edition or creation.
+        if (!$catagory) {
+            $catagory = new Catagory();
+            $creationMode = true;
+        }
 
+        $formula = $this->createForm(CatagoryType::class, $catagory);
+        $formula->handleRequest($req);
+
+        if ($formula->isSubmitted()) {
+            $em->persist($catagory);
+            $em->flush();
+            return $this->redirect('/pokemon');
+        }
+
+        return $this->render(
+            'pokemon/catform.html.twig',
+            [
+                'catagories' => $catagories,
+                'catForm' => $formula->createView()
+            ]
+        );
+    }
 
     /**
      * 
@@ -103,7 +136,6 @@ class PokemonController extends AbstractController
      */
     public function delete(Pokemon $pokemon, EMI $em): Response
     {
-
         $em->remove($pokemon);
         $em->flush();
         return $this->redirect('/pokemon');
@@ -112,6 +144,7 @@ class PokemonController extends AbstractController
     /**
      * 
      * @Route("/pokemon/{id}", name="pokemon_show")
+     * 
      */
     public function show(Pokemon $pokemon): Response
     {

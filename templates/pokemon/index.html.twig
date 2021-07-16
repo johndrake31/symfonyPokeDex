@@ -4,8 +4,16 @@
 {% endblock %}
 
 {% block body %}
-	<h1 class="text-center">PokemonDex</h1>
-	<a href="{{path('pokemon_new')}}" class="btn btn-success ms-5">Add New</a>
+	<header>
+		<nav class="navbar navbar-expand-lg navbar-light bg-light">
+			<div class="container-fluid">
+				<a class="navbar-brand" href="#">POKEDEX</a>
+				<a href="{{path('pokemon_new')}}" class="btn btn-primary ms-5">Add New Pokemon</a>
+				<a href="{{path('catagory_new')}}" class="btn btn-success ms-5">Add New Catagory</a>
+			</div>
+		</nav>
+	</header>
+
 
 	<div class="container">
 		<div class="d-flex flex-wrap p-5">

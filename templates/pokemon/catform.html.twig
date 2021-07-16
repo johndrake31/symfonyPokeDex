@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	Add Catagory
+{% endblock %}
+
+{% form_theme catForm 'bootstrap_5_layout.html.twig' %}
+
+
+{% block body %}
+	<h1 class="text-center mt-5">
+		Add Catagory
+	</h1>
+	<div class="container mb-2">
+		<div class="row">
+			{% for catag in catagories %}
+				<div class="col-2 border border-1 m-1 border-warning">
+					<h5 class="py-2 text-center">{{catag.name}}</h5>
+				</div>
+			{% endfor %}
+		</div>
+	</div>
+	{{ form_start(catForm)}}
+
+	<div class="container mb-5">
+		<div class="row">
+			<div class="col-6">
+				{{form_row(catForm.name, {'attr': {'class': 'bg-light m-2'}})}}
+
+				{{form_row(catForm.description, {'attr': {'class': 'bg-light m-2'}})}}
+
+				<button class="btn btn-warning" type="submit">Add Catagory</button>
+				<a href="{{path('pokemon')}}" class="btn btn-info">Home</a>
+			</div>
+		</div>
+	</div>
+
+
+	{{ form_end(catForm)}}
+
+{% endblock %}
