@@ -11,15 +11,6 @@
 	<h1 class="text-center mt-5">
 		Add Catagory
 	</h1>
-	<div class="container mb-2">
-		<div class="row">
-			{% for catag in catagories %}
-				<div class="col-2 border border-1 m-1 border-warning">
-					<h5 class="py-2 text-center">{{catag.name}}</h5>
-				</div>
-			{% endfor %}
-		</div>
-	</div>
 	{{ form_start(catForm)}}
 
 	<div class="container mb-5">
@@ -34,8 +25,24 @@
 			</div>
 		</div>
 	</div>
-
-
 	{{ form_end(catForm)}}
+
+
+	{# Existing Created Catagories #}
+	<div class="container mb-2">
+		<div class="row">
+			<p class="text-center">click to edit catagory</p>
+			{% for catag in catagories %}
+				<a href="{{path('catagory_edit', {id: catag.id})}}">
+					<div class="col-2 border border-1 m-1 border-warning">
+						<h5 class="py-2 text-center">{{catag.name}}</h5>
+						<p class="py-2 text-center">{{catag.description}}</p>
+					</div>
+				</a>
+
+			{% endfor %}
+		</div>
+	</div>
+
 
 {% endblock %}

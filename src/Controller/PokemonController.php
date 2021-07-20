@@ -101,10 +101,12 @@ class PokemonController extends AbstractController
     /**
      * 
      * @Route("/pokemon/catagory/new", name="catagory_new")
+     * @Route("/pokemon/catagory/edit/{id}", name="catagory_edit")
      */
     public function newCatagory(Catagory $catagory = null, Request $req, EMI $em, CatagoryRepository $repo): Response
     {
         $catagories = $repo->findAll();
+
         $creationMode = false;
         //test to see if mode edition or creation.
         if (!$catagory) {
